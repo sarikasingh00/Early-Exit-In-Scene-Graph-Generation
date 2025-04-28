@@ -1,4 +1,6 @@
-# Code
+# Early Exit In Scene Graph Generation
+
+## Code
  
 1. This project has been forked from the original [RelTr Paper GitHub Repository](https://github.com/yrcong/RelTR)
 2. To Setup Original RelTr Code refer to this [README.md](https://github.com/yrcong/RelTR/blob/main/README.md)
