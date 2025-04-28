@@ -142,21 +142,21 @@ def main(args):
                                   weight_decay=args.weight_decay)
     lr_scheduler = torch.optim.lr_scheduler.StepLR(optimizer, args.lr_drop)
 
-    dataset_train = build_dataset(image_set='train', args=args)
+    # dataset_train = build_dataset(image_set='train', args=args)
     dataset_val = build_dataset(image_set='val', args=args)
 
     if args.distributed:
-        sampler_train = DistributedSampler(dataset_train)
+        # sampler_train = DistributedSampler(dataset_train)
         sampler_val = DistributedSampler(dataset_val, shuffle=False)
     else:
-        sampler_train = torch.utils.data.RandomSampler(dataset_train)
+        # sampler_train = torch.utils.data.RandomSampler(dataset_train)
         sampler_val = torch.utils.data.SequentialSampler(dataset_val)
 
-    batch_sampler_train = torch.utils.data.BatchSampler(
-        sampler_train, args.batch_size, drop_last=True)
+    # batch_sampler_train = torch.utils.data.BatchSampler(
+    #     sampler_train, args.batch_size, drop_last=True)
 
-    data_loader_train = DataLoader(dataset_train, batch_sampler=batch_sampler_train,
-                                   collate_fn=utils.collate_fn, num_workers=args.num_workers)
+    # data_loader_train = DataLoader(dataset_train, batch_sampler=batch_sampler_train,
+                                  #  collate_fn=utils.collate_fn, num_workers=args.num_workers)
     data_loader_val = DataLoader(dataset_val, args.batch_size, sampler=sampler_val,
                                  drop_last=False, collate_fn=utils.collate_fn, num_workers=args.num_workers)
 
@@ -168,7 +168,8 @@ def main(args):
 
     output_dir = Path(args.output_dir)
     if args.resume:
-        checkpoint = torch.load(args.resume, map_location='cpu')
+        # checkpoint = torch.load(args.resume, map_location='cpu')
+        checkpoint = torch.load(args.resume, weights_only=False)
         model_without_ddp.load_state_dict(checkpoint['model'], strict=True)
         # del checkpoint['optimizer']
         if not args.eval and 'optimizer' in checkpoint and 'lr_scheduler' in checkpoint and 'epoch' in checkpoint:

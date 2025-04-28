@@ -1,0 +1,140 @@
+Evaluation for exit at layer- 0
+======================sgdet============================
+R@20: 0.138807
+R@50: 0.175143
+R@100: 0.192614
+
+======================sgdet  mean recall with constraint============================
+mR@20:  0.04196376661874502
+mR@50:  0.056637441494754553
+mR@100:  0.06703575203793939
+
+Averaged stats: class_error: 31.78  sub_error: 69.44  obj_error: 33.33  rel_error: 63.89  loss: 3.7146 (3.6983)  loss_ce: 0.5094 (0.5161)  loss_bbox: 1.2724 (1.1923)  loss_giou: 1.3074 (1.3222)  loss_rel: 0.5952 (0.6676)  loss_ce_unscaled: 0.5094 (0.5161)  class_error_unscaled: 38.9830 (36.8807)  sub_error_unscaled: 64.4737 (59.5496)  obj_error_unscaled: 44.1861 (49.5189)  loss_bbox_unscaled: 0.2545 (0.2385)  loss_giou_unscaled: 0.6537 (0.6611)  cardinality_error_unscaled: 7.7000 (7.5029)  loss_rel_unscaled: 0.5952 (0.6676)  rel_error_unscaled: 69.5652 (67.9045)
+
+IoU metric: bbox
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.075
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.173
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.056
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.013
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.044
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.116
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.145
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.231
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.237
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.048
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.169
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.308
+
+
+
+Evaluation for exit at layer- 1
+======================sgdet============================
+R@20: 0.155069
+R@50: 0.192669
+R@100: 0.211521
+
+======================sgdet  mean recall with constraint============================
+mR@20:  0.046886888314205705
+mR@50:  0.06650537691682241
+mR@100:  0.07595100022918035
+
+Averaged stats: class_error: 30.84  sub_error: 66.67  obj_error: 33.33  rel_error: 66.67  loss: 3.6023 (3.5610)  loss_ce: 0.4870 (0.4949)  loss_bbox: 1.1872 (1.1425)  loss_giou: 1.2505 (1.2670)  loss_rel: 0.5746 (0.6565)  loss_ce_unscaled: 0.4870 (0.4949)  class_error_unscaled: 36.4407 (35.6700)  sub_error_unscaled: 62.5000 (56.5705)  obj_error_unscaled: 39.5062 (47.6857)  loss_bbox_unscaled: 0.2374 (0.2285)  loss_giou_unscaled: 0.6253 (0.6335)  cardinality_error_unscaled: 7.7000 (8.1774)  loss_rel_unscaled: 0.5746 (0.6565)  rel_error_unscaled: 67.4419 (66.1795)
+
+IoU metric: bbox
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.089
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.199
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.070
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.015
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.055
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.139
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.161
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.254
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.259
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.057
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.190
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.337
+
+
+Evaluation for exit at layer- 2
+======================sgdet============================
+R@20: 0.165356
+R@50: 0.203672
+R@100: 0.224191
+
+
+======================sgdet  mean recall with constraint============================
+mR@20:  0.04958235606838588
+mR@50:  0.07110319886700786
+mR@100:  0.07837762032802917
+
+Averaged stats: class_error: 27.10  sub_error: 63.89  obj_error: 33.33  rel_error: 69.44  loss: 3.5187 (3.4756)  loss_ce: 0.4720 (0.4811)  loss_bbox: 1.2208 (1.1131)  loss_giou: 1.2428 (1.2320)  loss_rel: 0.5670 (0.6494)  loss_ce_unscaled: 0.4720 (0.4811)  class_error_unscaled: 35.1145 (34.5482)  sub_error_unscaled: 61.8421 (54.7091)  obj_error_unscaled: 39.6552 (46.6150)  loss_bbox_unscaled: 0.2442 (0.2226)  loss_giou_unscaled: 0.6214 (0.6160)  cardinality_error_unscaled: 8.1000 (8.3852)  loss_rel_unscaled: 0.5670 (0.6494)  rel_error_unscaled: 67.4419 (65.1281)
+
+IoU metric: bbox
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.099
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.215
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.079
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.019
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.064
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.153
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.172
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.270
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.276
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.073
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.208
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.355
+
+
+Evaluation for exit at layer- 3
+======================sgdet============================
+R@20: 0.174544
+R@50: 0.215325
+R@100: 0.235548
+
+======================sgdet  mean recall with constraint============================
+mR@20:  0.05336935758160697
+mR@50:  0.07239336152171336
+mR@100:  0.08021551047161146
+
+Averaged stats: class_error: 30.84  sub_error: 63.89  obj_error: 27.78  rel_error: 69.44  loss: 3.5091 (3.3997)  loss_ce: 0.4582 (0.4680)  loss_bbox: 1.1781 (1.0895)  loss_giou: 1.2146 (1.1994)  loss_rel: 0.5582 (0.6428)  loss_ce_unscaled: 0.4582 (0.4680)  class_error_unscaled: 36.1111 (34.4297)  sub_error_unscaled: 59.2105 (53.5866)  obj_error_unscaled: 41.8605 (46.0144)  loss_bbox_unscaled: 0.2356 (0.2179)  loss_giou_unscaled: 0.6073 (0.5997)  cardinality_error_unscaled: 8.5000 (8.5466)  loss_rel_unscaled: 0.5582 (0.6428)  rel_error_unscaled: 65.1163 (64.2127)
+
+IoU metric: bbox
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.109
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.231
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.091
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.020
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.073
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.167
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.181
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.282
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.288
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.083
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.221
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.363
+
+
+Evaluation for exit at layer- 4
+======================sgdet============================
+R@20: 0.182504
+R@50: 0.225312
+R@100: 0.245393
+
+======================sgdet  mean recall with constraint============================
+mR@20:  0.0558314449707774
+mR@50:  0.07514159476874731
+mR@100:  0.08238418251579374
+
+Averaged stats: class_error: 28.04  sub_error: 63.89  obj_error: 27.78  rel_error: 61.11  loss: 3.4614 (3.3343)  loss_ce: 0.4575 (0.4589)  loss_bbox: 1.1584 (1.0711)  loss_giou: 1.1983 (1.1671)  loss_rel: 0.5454 (0.6373)  loss_ce_unscaled: 0.4575 (0.4589)  class_error_unscaled: 36.0000 (34.2982)  sub_error_unscaled: 55.0000 (52.4960)  obj_error_unscaled: 39.5349 (45.8891)  loss_bbox_unscaled: 0.2317 (0.2142)  loss_giou_unscaled: 0.5991 (0.5836)  cardinality_error_unscaled: 9.1000 (8.7538)  loss_rel_unscaled: 0.5454 (0.6373)  rel_error_unscaled: 64.4737 (63.7556)
+
+IoU metric: bbox
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.119
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.244
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.102
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.027
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.083
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.177
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.193
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.298
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.304
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.103
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.239
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.375

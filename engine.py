@@ -7,6 +7,7 @@ Train and eval functions used in main.py
 import math
 import sys
 from typing import Iterable
+from google.colab import output
 import numpy as np
 
 import torch
@@ -16,6 +17,7 @@ import util.misc as utils
 from util.box_ops import rescale_bboxes
 from lib.evaluation.sg_eval import BasicSceneGraphEvaluator, calculate_mR_from_evaluator_list
 from lib.openimages_evaluation import task_evaluation_sg
+from zmq.backend import has
 
 def train_one_epoch(model: torch.nn.Module, criterion: torch.nn.Module,
                     data_loader: Iterable, optimizer: torch.optim.Optimizer,
@@ -80,6 +82,10 @@ def evaluate(model, criterion, postprocessors, data_loader, base_ds, device, arg
     model.eval()
     criterion.eval()
 
+    if hasattr(args, 'exit'):
+      print("Evaluation for exit at layer-", args.exit)
+
+
     metric_logger = utils.MetricLogger(delimiter="  ")
     metric_logger.add_meter('class_error', utils.SmoothedValue(window_size=1, fmt='{value:.2f}'))
     metric_logger.add_meter('sub_error', utils.SmoothedValue(window_size=1, fmt='{value:.2f}'))
@@ -104,13 +110,21 @@ def evaluate(model, criterion, postprocessors, data_loader, base_ds, device, arg
 
     iou_types = tuple(k for k in ('segm', 'bbox') if k in postprocessors.keys())
     coco_evaluator = CocoEvaluator(base_ds, iou_types)
-
+    all_exit_layers = []
     for samples, targets in metric_logger.log_every(data_loader, 100, header):
 
         samples = samples.to(device)
         targets = [{k: v.to(device) for k, v in t.items()} for t in targets]
 
-        outputs = model(samples)
+        outputs = None
+        if hasattr(args, 'exit'):
+          outputs, batch_exit_layers = model(samples, layer_exit = args.exit)
+        else:
+          if hasattr(args, 'confidence_threshold'):
+            outputs, batch_exit_layers = model(samples, confidence_threshold = args.confidence_threshold)
+          else:
+            outputs, batch_exit_layers = model(samples)
+        all_exit_layers.extend(batch_exit_layers)
         loss_dict = criterion(outputs, targets)
         weight_dict = criterion.weight_dict
 
@@ -142,11 +156,15 @@ def evaluate(model, criterion, postprocessors, data_loader, base_ds, device, arg
 
     if args.dataset == 'vg':
         evaluator['sgdet'].print_stats()
+        # evaluator['sgcls'].print_stats()
+        # evaluator['predcls'].print_stats()
     else:
         task_evaluation_sg.eval_rel_results(all_results, 100, do_val=True, do_vis=False)
 
     if args.eval and args.dataset == 'vg':
         calculate_mR_from_evaluator_list(evaluator_list, 'sgdet')
+        calculate_mR_from_evaluator_list(evaluator_list, 'sgcls')
+        calculate_mR_from_evaluator_list(evaluator_list, 'predcls')
 
     # gather the stats from all processes
     metric_logger.synchronize_between_processes()
@@ -164,7 +182,7 @@ def evaluate(model, criterion, postprocessors, data_loader, base_ds, device, arg
         if 'bbox' in postprocessors.keys():
             stats['coco_eval_bbox'] = coco_evaluator.coco_eval['bbox'].stats.tolist()
 
-    return stats, coco_evaluator
+    return stats, coco_evaluator, all_exit_layers
 
 def evaluate_rel_batch(outputs, targets, evaluator, evaluator_list):
     for batch, target in enumerate(targets):
@@ -190,6 +208,8 @@ def evaluate_rel_batch(outputs, targets, evaluator, evaluator_list):
                       'rel_scores': rel_scores.cpu().clone().numpy()}
 
         evaluator['sgdet'].evaluate_scene_graph_entry(gt_entry, pred_entry)
+        # evaluator['sgcls'].evaluate_scene_graph(gt_entry, pred_entry)
+        # evaluator['predcls'].evaluate_scene_graph(gt_entry, pred_entry)
 
         if evaluator_list is not None:
             for pred_id, _, evaluator_rel in evaluator_list:
@@ -198,40 +218,5 @@ def evaluate_rel_batch(outputs, targets, evaluator, evaluator_list):
                 gt_entry_rel['gt_relations'] = gt_entry_rel['gt_relations'][mask, :]
                 if gt_entry_rel['gt_relations'].shape[0] == 0:
                     continue
+                # evaluator_rel['sgcls'].evaluate_scene_graph_entry(gt_entry_rel, pred_entry)
                 evaluator_rel['sgdet'].evaluate_scene_graph_entry(gt_entry_rel, pred_entry)
-
-
-def evaluate_rel_batch_oi(outputs, targets, all_results):
-
-    for batch, target in enumerate(targets):
-        target_bboxes_scaled = rescale_bboxes(target['boxes'].cpu(), torch.flip(target['orig_size'],dims=[0]).cpu()).clone().numpy() # recovered boxes with original size
-
-        sub_bboxes_scaled = rescale_bboxes(outputs['sub_boxes'][batch].cpu(), torch.flip(target['orig_size'],dims=[0]).cpu()).clone().numpy()
-        obj_bboxes_scaled = rescale_bboxes(outputs['obj_boxes'][batch].cpu(), torch.flip(target['orig_size'],dims=[0]).cpu()).clone().numpy()
-
-        pred_sub_scores, pred_sub_classes = torch.max(outputs['sub_logits'][batch].softmax(-1)[:, :-1], dim=1)
-        pred_obj_scores, pred_obj_classes = torch.max(outputs['obj_logits'][batch].softmax(-1)[:, :-1], dim=1)
-
-        rel_scores = outputs['rel_logits'][batch][:, :-1].softmax(-1)
-
-        relation_idx = target['rel_annotations'].cpu().numpy()
-        gt_sub_boxes = target_bboxes_scaled[relation_idx[:, 0]]
-        gt_sub_labels = target['labels'][relation_idx[:, 0]].cpu().clone().numpy()
-        gt_obj_boxes = target_bboxes_scaled[relation_idx[:, 1]]
-        gt_obj_labels = target['labels'][relation_idx[:, 1]].cpu().clone().numpy()
-
-        img_result_dict = {'sbj_boxes': sub_bboxes_scaled,
-                           'sbj_labels': pred_sub_classes.cpu().clone().numpy(),
-                           'sbj_scores': pred_sub_scores.cpu().clone().numpy(),
-                           'obj_boxes': obj_bboxes_scaled,
-                           'obj_labels': pred_obj_classes.cpu().clone().numpy(),
-                           'obj_scores': pred_obj_scores.cpu().clone().numpy(),
-                           'prd_scores': rel_scores.cpu().clone().numpy(),
-                           'image': str(target['image_id'].item())+'.jpg',
-                           'gt_sbj_boxes': gt_sub_boxes,
-                           'gt_sbj_labels': gt_sub_labels,
-                           'gt_obj_boxes': gt_obj_boxes,
-                           'gt_obj_labels': gt_obj_labels,
-                           'gt_prd_labels': relation_idx[:, 2]
-                           }
-        all_results.append(img_result_dict)
